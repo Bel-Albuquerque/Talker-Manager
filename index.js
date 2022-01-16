@@ -1,6 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const { 
+  postTalker, 
+  checkAuthorization, 
+  checkName, 
+  checkAge, 
+  checkTalk, 
+} = require('./middlewares/postTalker');
+const login = require('./middlewares/login');
 
 const app = express();
 app.use(bodyParser.json());
@@ -23,9 +31,9 @@ const findTalker = (req, res) => {
   return res.status(HTTP_OK_STATUS).send(talker);
 };
 
-
-
 app.get('/talker/:id', findTalker);
+app.post('/login', login);
+app.post('/talker', checkAuthorization, checkName, checkAge, checkTalk, postTalker);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
