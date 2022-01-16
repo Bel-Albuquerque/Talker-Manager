@@ -10,6 +10,7 @@ const {
 const findTalker = require('./middlewares/findTalker');
 const login = require('./middlewares/login');
 const getTalkers = require('./middlewares/getTalkers');
+const putTalker = require('./middlewares/putTalker');
 
 const app = express();
 app.use(bodyParser.json());
@@ -21,6 +22,7 @@ app.get('/talker', getTalkers);
 app.get('/talker/:id', findTalker);
 app.post('/login', login);
 app.post('/talker', checkAuthorization, checkName, checkAge, checkTalk, postTalker);
+app.put('/talker/:id', checkAuthorization, checkName, checkAge, checkTalk, putTalker);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
